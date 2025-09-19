@@ -1,13 +1,12 @@
 workflows:
   ios-customer:
     name: iOS Customer Release
+    integrations:
+      app_store_connect: ahioma_asc   # <-- EXACT name of the integration you created in UI
     environment:
       flutter: stable
       xcode: latest
       cocoapods: default
-      vars:
-        XCODE_WORKSPACE: "ios/Runner.xcworkspace"
-        XCODE_SCHEME: "Runner"
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.ahiaoma.customer
@@ -26,5 +25,5 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        auth: integration   # uses the API key you’ll add in Codemagic UI
+        auth: integration            # <-- now valid because the integration is declared above
         submit_to_testflight: true
