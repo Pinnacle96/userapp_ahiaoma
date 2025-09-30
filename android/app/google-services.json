@@ -12,6 +12,50 @@
           "package_name": "com.ahiaoma.customer"
         }
       },
+      "oauth_client": [
+        {
+          "client_id": "986297342898-9cnlkk88oh5d109sbsklsnnem1ld43o8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahiaoma.customer",
+            "certificate_hash": "d4eaa447d63f4dc31e32c0cc1a76c33962b5bc1c"
+          }
+        },
+        {
+          "client_id": "986297342898-n4faadrd9l1pev7p4g9nd4g08dkj1hhc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ahiaoma.customer",
+            "certificate_hash": "65704eb4ae75f2621db7c18c5f43a8a8a5eb1fae"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTc2kh9Y42vUK6_mBpCIw-663dCvZigbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986297342898-6h2rs3l1na95ngevkrc3kkg405v1u11j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ahiaoma.customer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986297342898:android:c4f6f8c5759be3618c62ab",
+        "android_client_info": {
+          "package_name": "com.ahiaoma.delivery"
+        }
+      },
       "oauth_client": [],
       "api_key": [
         {
@@ -20,7 +64,42 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986297342898-6h2rs3l1na95ngevkrc3kkg405v1u11j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ahiaoma.customer"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986297342898:android:c1048c12d67cf86c8c62ab",
+        "android_client_info": {
+          "package_name": "com.ahiaoma.seller"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTc2kh9Y42vUK6_mBpCIw-663dCvZigbE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "986297342898-6h2rs3l1na95ngevkrc3kkg405v1u11j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ahiaoma.customer"
+              }
+            }
+          ]
         }
       }
     }
