@@ -20,12 +20,12 @@ class LatestProductListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Selector<ProductController, ProductModel?>(
-      selector: (ctx, productController)=> productController.latestProductModel,
-      builder: (context, latestProductModel, child) {
-        return (latestProductModel?.products?.isNotEmpty ?? false)  ? Column( children: [
+      selector: (ctx, productController)=> productController.bestSellingProductModel,
+      builder: (context, bestSellingProductModel, child) {
+        return (bestSellingProductModel?.products?.isNotEmpty ?? false)  ? Column( children: [
           TitleRowWidget(
-            title: getTranslated('latest_products', context),
-            onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (_) => const ViewAllProductScreen(productType: ProductType.latestProduct))),
+            title: getTranslated('best_selling', context),
+            onTap: ()=> Navigator.push(context, MaterialPageRoute(builder: (_) => const ViewAllProductScreen(productType: ProductType.bestSelling))),
           ),
 
           const SizedBox(height: Dimensions.paddingSizeSmall),
@@ -44,9 +44,9 @@ class LatestProductListWidget extends StatelessWidget {
                 pauseAutoPlayInFiniteScroll: true,
                 disableCenter: true,
               ),
-              itemCount: latestProductModel?.products?.length,
+              itemCount: bestSellingProductModel?.products?.length,
               itemBuilder: (context, index, next) {
-                return ProductWidget(productModel: latestProductModel!.products![index], productNameLine: 1);
+                return ProductWidget(productModel: bestSellingProductModel!.products![index], productNameLine: 1);
               },
             ),
           ),
@@ -54,7 +54,7 @@ class LatestProductListWidget extends StatelessWidget {
 
 
 
-        ]) : latestProductModel == null ? const SliderProductShimmerWidget() : const SizedBox();
+        ]) : bestSellingProductModel == null ? const SliderProductShimmerWidget() : const SizedBox();
       },
     );
   }

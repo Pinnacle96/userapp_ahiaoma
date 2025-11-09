@@ -90,7 +90,7 @@ class FashionThemeHomePage extends StatefulWidget {
 
     brandController.getBrandList(offset: 1, isUpdate: reload);
 
-    productController.getLatestProductList(1, isUpdate: reload);
+    productController.getBestSellingProductList(1, isUpdate: reload);
     productController.getSelectedProductModel(1, isUpdate: false);
 
     productController.getFeaturedProductModel(1, isUpdate: reload);

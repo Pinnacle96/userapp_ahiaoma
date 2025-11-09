@@ -8,14 +8,20 @@ class GoogleSignInController with ChangeNotifier {
   late GoogleSignInClientAuthorization? auth;
 
   Future<void> login() async {
+    // New google_sign_in API requires serverClientId on BOTH Android and iOS
+    await _googleSignIn.initialize(
+      serverClientId: AppConstants.googleServerClientId,
+    );
 
-    await _googleSignIn.initialize(serverClientId: AppConstants.googleServerClientId)
-        .then((_) async {
+    googleAccount = await _googleSignIn.authenticate();
+    if (googleAccount == null) {
+      // user cancelled
+      notifyListeners();
+      return;
+    }
 
-      googleAccount = await _googleSignIn.authenticate();
-      const List<String> scopes = <String>['email'];
-      auth = await googleAccount?.authorizationClient.authorizationForScopes(scopes);
-    });
+    const scopes = <String>['email'];
+    auth = await googleAccount!.authorizationClient.authorizationForScopes(scopes);
 
     notifyListeners();
   }

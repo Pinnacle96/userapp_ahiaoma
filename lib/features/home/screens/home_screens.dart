@@ -95,7 +95,7 @@ class HomePage extends StatefulWidget {
 
     // productController.getLProductList('1', reload: reload);
 
-    productController.getLatestProductList(1, isUpdate: reload);
+    productController.getBestSellingProductList(1, isUpdate: reload);
     productController.getSelectedProductModel(1, isUpdate: reload);
 
     productController.getFeaturedProductModel(1, isUpdate: reload);

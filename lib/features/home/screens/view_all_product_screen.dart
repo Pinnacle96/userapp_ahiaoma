@@ -88,6 +88,9 @@ class _ViewAllProductScreenState extends State<ViewAllProductScreen> {
       case ProductType.justForYou:
         return 'just_for_you';
 
+      case ProductType.bestSelling:
+        return 'best_selling';
+
       default: return 'latest_product';
     }
   }

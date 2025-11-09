@@ -25,7 +25,12 @@ class CategoryWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
             color: Theme.of(context).primaryColor.withValues(alpha:.125)),
           child: ClipRRect(borderRadius: BorderRadius.circular(Dimensions.paddingSizeSmall),
-            child: CustomImageWidget(image: '${category.imageFullUrl?.path}'))),
+            child: CustomImageWidget(
+              image: '${category.imageFullUrl?.path}',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ))),
 
         const SizedBox(height: Dimensions.paddingSizeExtraSmall),
         Center(child: SizedBox(width: MediaQuery.of(context).size.width/6.5,

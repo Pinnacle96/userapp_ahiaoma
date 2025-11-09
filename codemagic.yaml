@@ -2,7 +2,7 @@ workflows:
   ios-customer:
     name: iOS Customer Release
     integrations:
-      app_store_connect: ahioma_asc   # <-- EXACT name of the integration you created in UI
+      app_store_connect: ahioma_asc   # Name of App Store Connect integration configured in Codemagic UI
     environment:
       flutter: stable
       xcode: latest
@@ -19,11 +19,64 @@ workflows:
             mkdir -p ios/Runner
             cp "$CM_SECURE_FILES_DIR/GoogleService-Info.plist" ios/Runner/GoogleService-Info.plist
           fi
-      - name: Build IPA
-        script: flutter build ipa --release --build-name 1.0.0 --build-number $BUILD_NUMBER
+      - name: Build IPA (release)
+        script: |
+          # Use Codemagic build id as monotonically increasing build number
+          BUILD_NO=${CM_BUILD_ID:-1}
+          flutter build ipa --release --build-number $BUILD_NO
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        auth: integration            # <-- now valid because the integration is declared above
+        auth: integration
         submit_to_testflight: true
+
+  android-customer:
+    name: Android Customer Release (APK + AAB)
+    environment:
+      flutter: stable
+      java: 17
+    scripts:
+      - name: Pub get
+        script: flutter pub get
+
+      - name: Decode keystore from secure files
+        script: |
+          # Expect a base64-encoded keystore stored as CM_KEYSTORE in Environment variables
+          if [ -n "$CM_KEYSTORE" ]; then
+            echo "$CM_KEYSTORE" | base64 --decode > android/ahioma-release.jks
+          elif [ -f "$CM_SECURE_FILES_DIR/ahioma-release.jks" ]; then
+            cp "$CM_SECURE_FILES_DIR/ahioma-release.jks" android/ahioma-release.jks
+          else
+            echo "No keystore provided via CM_KEYSTORE or secure files. Release signing will fail.";
+            exit 1
+          fi
+
+      - name: Write key.properties for Gradle signing
+        script: |
+          cat > key.properties << EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=android/ahioma-release.jks
+          EOF
+
+      - name: Build AAB (release)
+        script: |
+          BUILD_NO=${CM_BUILD_ID:-1}
+          flutter build appbundle --release --build-number $BUILD_NO
+
+      - name: Build APK (release)
+        script: |
+          BUILD_NO=${CM_BUILD_ID:-1}
+          flutter build apk --release --build-number $BUILD_NO
+
+    artifacts:
+      - build/app/outputs/bundle/release/*.aab
+      - build/app/outputs/flutter-apk/*.apk
+
+    # Optional: add Google Play publishing once integration is configured in UI
+    # publishing:
+    #   google_play:
+    #     credentials: integration
+    #     track: internal

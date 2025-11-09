@@ -240,8 +240,8 @@ class _ChatScreenState extends State<ChatScreen> {
                                         height: 80,
                                         width: chatController.pickedMediaStored?[index].isVideo ?? false ? 120 : 80,
                                         child: chatController.pickedMediaStored?[index].isSvg ?? false
-                                            ? SvgPicture.file(File(chatController.pickedMediaStored![index].thumbnailPath ?? ''), fit: BoxFit.cover)
-                                            : Image.file(File(chatController.pickedMediaStored![index].thumbnailPath ?? ''), fit: BoxFit.cover),
+                                            ? SvgPicture.file((File(chatController.pickedMediaStored![index].thumbnailPath ?? '')) as dynamic, fit: BoxFit.cover)
+                                            : Image.file((File(chatController.pickedMediaStored![index].thumbnailPath ?? '')) as dynamic, fit: BoxFit.cover),
                                       ),
                                     ),
                                   ),

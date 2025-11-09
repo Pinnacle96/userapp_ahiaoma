@@ -85,6 +85,7 @@ dependencies:
   webview_flutter: ^4.9.0
   skeletonizer: ^1.4.3
   phone_numbers_parser: ^9.0.3
+  
 
 
 #dependency_overrides:

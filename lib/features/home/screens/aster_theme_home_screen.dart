@@ -92,7 +92,7 @@ class AsterThemeHomeScreen extends StatefulWidget {
 
     brandController.getBrandList(offset: 1, isUpdate: reload);
 
-    productController.getLatestProductList(1, isUpdate: false);
+    productController.getBestSellingProductList(1, isUpdate: false);
     productController.getSelectedProductModel(1, isUpdate: false);
 
 

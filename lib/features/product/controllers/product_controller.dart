@@ -39,6 +39,9 @@ class ProductController extends ChangeNotifier {
   ProductModel? _latestProductModel;
   ProductModel? get latestProductModel => _latestProductModel;
 
+  ProductModel? _bestSellingProductModel;
+  ProductModel? get bestSellingProductModel => _bestSellingProductModel;
+
   ProductModel? _featuredProductModel;
   ProductModel? get featuredProductModel => _featuredProductModel;
 
@@ -144,7 +147,7 @@ class ProductController extends ChangeNotifier {
         },
       );
     }else {
-      final ApiResponseModel? apiResponse = await productServiceInterface?.getProductModelByType<Response>(offset: offset , productType: ProductType.latestProduct, source: DataSourceEnum.client);
+      final ApiResponseModel? apiResponse = await productServiceInterface?.getProductModelByType<Response>(offset: offset , productType: type, source: DataSourceEnum.client);
 
       if (apiResponse?.response?.statusCode == 200) {
         final ProductModel parsedProductModel = ProductModel.fromJson(apiResponse?.response?.data);
@@ -197,6 +200,50 @@ class ProductController extends ChangeNotifier {
         _latestProductModel?.totalSize = parsedProductModel.totalSize;
         _latestProductModel?.offset = parsedProductModel.offset;
         _latestProductModel?.products?.addAll(parsedProductModel.products ?? []);
+
+
+      } else {
+        ApiChecker.checkApi(apiResponse!);
+
+      }
+      notifyListeners();
+    }
+
+  }
+
+
+  Future<void> getBestSellingProductList(int offset, {bool isUpdate = false}) async {
+    if(offset == 1) {
+      _bestSellingProductModel = null;
+
+      if(isUpdate) {
+        notifyListeners();
+      }
+    }
+
+    if(offset == 1) {
+      DataSyncHelper.fetchAndSyncData(
+        fetchFromLocal: ()=> productServiceInterface!.getProductModelByType(offset: offset, productType: ProductType.bestSelling, source: DataSourceEnum.local),
+        fetchFromClient: ()=> productServiceInterface!.getProductModelByType(offset: offset, productType: ProductType.bestSelling, source: DataSourceEnum.client),
+        onResponse: (data, source){
+          try{
+            _bestSellingProductModel = ProductModel.fromJson(data);
+
+          }catch(e){
+            _bestSellingProductModel = ProductModel(offset: offset, products: []);
+          }
+          notifyListeners();
+        },
+      );
+    }else {
+      final ApiResponseModel? apiResponse = await productServiceInterface?.getProductModelByType<Response>(offset: offset , productType: ProductType.bestSelling, source: DataSourceEnum.client);
+
+      if (apiResponse?.response?.statusCode == 200) {
+        final ProductModel parsedProductModel = ProductModel.fromJson(apiResponse?.response?.data);
+
+        _bestSellingProductModel?.totalSize = parsedProductModel.totalSize;
+        _bestSellingProductModel?.offset = parsedProductModel.offset;
+        _bestSellingProductModel?.products?.addAll(parsedProductModel.products ?? []);
 
 
       } else {
